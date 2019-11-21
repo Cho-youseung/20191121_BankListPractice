@@ -1,0 +1,69 @@
+app/src/main/java/com/tjoeun/a20191113_02_pizzastorepractice/MainActivity.kt
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle	import android.os.Bundle
+import com.tjoeun.a20191113_02_pizzastorepractice.adapters.PizzaStoreAdapter
+import com.tjoeun.a20191113_02_pizzastorepractice.datas.PizzaStoreData	import com.tjoeun.a20191113_02_pizzastorepractice.datas.PizzaStoreData
+import kotlinx.android.synthetic.main.activity_main.*
+
+
+class MainActivity : BaseActivity() {	class MainActivity : BaseActivity() {
+    var pizzaStoreList = ArrayList<PizzaStoreData>()	    var pizzaStoreList = ArrayList<PizzaStoreData>()
+    var pizzaStoreAdapter:PizzaStoreAdapter? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {	    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)	        super.onCreate(savedInstanceState)
+@@ -19,6 +22,10 @@ class MainActivity : BaseActivity() {
+
+
+    override fun setValues() {	    override fun setValues() {
+        addPizzaStores()	        addPizzaStores()
+
+        pizzaStoreAdapter = PizzaStoreAdapter(mContext, pizzaStoreList)
+        pizzaStoreListView.adapter = pizzaStoreAdapter
+
+    }	    }
+
+
+app/src/main/java/com/tjoeun/a20191113_02_pizzastorepractice/adapters/PizzaStoreAdapter.kt
+
+package com.tjoeun.a20191113_02_pizzastorepractice.adapters
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.TextView
+import com.tjoeun.a20191113_02_pizzastorepractice.R
+import com.tjoeun.a20191113_02_pizzastorepractice.datas.PizzaStoreData
+
+class PizzaStoreAdapter(context:Context, resource:Int, list:ArrayList<PizzaStoreData>)
+    : ArrayAdapter<PizzaStoreData> (context, R.layout.pizza_store_list_item, list) {
+
+
+    var mContext = context
+    var mList = list
+    var inf = LayoutInflater.from(mContext)
+
+    constructor(context: Context, list: ArrayList<PizzaStoreData>)
+            : this(context, R.layout.pizza_store_list_item, list)
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+
+        var tempRow = convertView
+        if (tempRow == null) {
+            tempRow = inf.inflate(R.layout.pizza_store_list_item, null)
+        }
+//        tempRow가 null인 경우를 대비했으니, row에 tempRow는 절대 null 아니라고 하면서 대입.
+        var row = tempRow!!
+
+//        근거 데이터 변수 추출
+        var data = mList.get(position)
+
+
+
+
+        return row
+    }
